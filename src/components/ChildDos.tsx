@@ -5,5 +5,5 @@ const ChildDos = () => {
     </div>
   );
 }
- 
+
 export default ChildDos;

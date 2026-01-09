@@ -1,11 +1,13 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import { useState } from 'react'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
 import './App.scss'
 import Parent from './components/Parent'
+import AppProvider from './state/AppContext'
+import UserProvider from './state/UserContext'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
     <>
@@ -31,7 +33,11 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
        */}
-      <Parent />
+      <AppProvider>
+        <UserProvider>
+          <Parent />
+        </UserProvider>
+      </AppProvider>
     </>
   )
 }

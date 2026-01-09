@@ -1,16 +1,18 @@
-import { useReducer, useState } from "react";
-import { useQueryLite, useToggle } from "../hooks";
+import { useEffect } from "react";
+import { useQueryLite, useUserContext, useAppContext } from "../hooks";
 import { getPosts } from "../api";
-import { initialUserState, userReducer } from "../state/reducers/userReducer";
-import Posts from "./Posts";
 import User from "./User";
+import Posts from "./Posts";
 
 const ChildUno = () => {
-  // states 
-  const [count, setCount] = useState<number>(0);
-  const { value: isDark, toggle } = useToggle();
-  const [userState, userDispatch] = useReducer(userReducer, initialUserState);
+  // hooks
+  const { state: appState, dispatch: appDispatch } = useAppContext()
+  const { state: userState, dispatch: userDispatch } = useUserContext()
   const getPostsReturn = useQueryLite({ queryFn: (signal) => getPosts(signal) });
+
+  useEffect(() => {
+    if (getPostsReturn.data) appDispatch({ type: "UPDATE_POSTS", payload: getPostsReturn.data });
+  }, [getPostsReturn.data, appDispatch]);
 
   return (
     <>
@@ -19,15 +21,15 @@ const ChildUno = () => {
 
         <div>
           <span>counter: </span>
-          <button onClick={() => setCount(count - 1)}>-</button>
-          <span style={{ margin: '0 10px' }}>{count}</span>
-          <button onClick={() => setCount(count + 1)}>+</button>
+          <button onClick={() => appDispatch({ type: 'DECREMENT', payload: "" })}>-</button>
+          <span style={{ margin: '0 10px' }}>{appState.count}</span>
+          <button onClick={() => appDispatch({ type: 'INCREMENT', payload: "" })}>+</button>
         </div>
 
         <div>
           <span>theme: </span>
-          <button onClick={toggle}>
-            {isDark ? 'Dark' : 'Light'}
+          <button onClick={() => appDispatch({ type: 'TOGGLE_THEME', payload: "" })}>
+            {appState.theme}
           </button>
         </div>
 

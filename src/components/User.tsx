@@ -1,7 +1,8 @@
-import type { Dispatch } from "react";
-import type { IUser, UserAction } from "../state/reducers/userReducer";
+// import type { IUser } from "../state/reducers/userReducer";
+import { UPDATE_ADDRESS, UPDATE_USER, type IUser } from "../state/reducers/userSlice";
+import type { AppDispatch } from "../state/store";
 
-const User = ({ userState, userDispatch }: { userState: IUser; userDispatch: Dispatch<UserAction> }) => {
+const User = ({ userState, dispatch }: { userState: IUser; dispatch: AppDispatch }) => {
   return (
     <div>
       <div>
@@ -11,8 +12,8 @@ const User = ({ userState, userDispatch }: { userState: IUser; userDispatch: Dis
           name="username"
           placeholder="Enter Username"
           value={userState.username}
-          onChange={(e) => userDispatch({ type: 'UPDATE_USER', payload: { username: e.target.value } })}
-          autoFocus />
+          // onChange={(e) => dispatch({ type: 'UPDATE_USER', payload: { username: e.target.value } })}
+          onChange={(e) => dispatch(UPDATE_USER({ username: e.target.value}))} />
         <p>{userState.username}</p>
       </div>
 
@@ -24,7 +25,8 @@ const User = ({ userState, userDispatch }: { userState: IUser; userDispatch: Dis
           name="email"
           placeholder="Enter Email"
           value={userState.email}
-          onChange={(e) => userDispatch({ type: 'UPDATE_USER', payload: { email: e.target.value } })} />
+          // onChange={(e) => dispatch({ type: 'UPDATE_USER', payload: { email: e.target.value } })} />
+          onChange={(e) => dispatch(UPDATE_USER({ email: e.target.value}))} />
         <p>{userState.email}</p>
       </div>
 
@@ -36,7 +38,8 @@ const User = ({ userState, userDispatch }: { userState: IUser; userDispatch: Dis
           name="street"
           placeholder="Enter Street"
           value={userState.address?.street}
-          onChange={(e) => userDispatch({ type: 'UPDATE_ADDRESS', payload: { street: e.target.value } })} />
+          // onChange={(e) => dispatch({ type: 'UPDATE_ADDRESS', payload: { street: e.target.value } })} />
+          onChange={(e) => dispatch(UPDATE_ADDRESS({ street: e.target.value}))} />
         <p>{userState.address?.street}</p>
       </div>
 
@@ -48,7 +51,8 @@ const User = ({ userState, userDispatch }: { userState: IUser; userDispatch: Dis
           name="city"
           placeholder="Enter City"
           value={userState.address?.city}
-          onChange={(e) => userDispatch({ type: 'UPDATE_ADDRESS', payload: { city: e.target.value } })} />
+          // onChange={(e) => dispatch({ type: 'UPDATE_ADDRESS', payload: { city: e.target.value } })} />
+          onChange={(e) => dispatch(UPDATE_ADDRESS({ city: e.target.value}))} />
         <p>{userState.address?.city}</p>
       </div>
     </div>
